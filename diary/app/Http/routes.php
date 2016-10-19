@@ -18,3 +18,8 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+Route::get('/posts', 'PostController@index');
+Route::post('/post', 'PostController@store');
+Route::delete('/post/{post}', 'PostController@destroy');
+
