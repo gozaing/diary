@@ -5,17 +5,29 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Post;
+use App\Repositories\PostRepository;
 
 class PostController extends Controller
 {
     /**
+     * ポストリポジトリーインスタンス
+     *
+     * @var PostRepository
+     */
+    protected $posts;
+
+    /**
      * 新しいコントローラインスタンスの作成
      *
+     * @param PostRepository $posts
      * @return void
      */
-    public function __construct()
+    public function __construct(PostRepository $posts)
     {
         $this->middleware('auth');
+
+        $this->posts = $posts;
     }
 
     /**
@@ -26,11 +38,8 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-//        return view('posts.index');
-        $posts = $request->user()->posts()->get();
-
         return view('posts.index', [
-            'posts' => $posts,
+            'posts' => $this->posts->forUser($request->user()),
         ]);
     }
 
