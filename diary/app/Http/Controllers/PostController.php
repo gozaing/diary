@@ -74,7 +74,11 @@ class PostController extends Controller
      */
     public function destroy(Request $request, Post $post)
     {
-        //
+        $this->authorize('destroy', $post);
+
+        $post->delete();
+
+        return redirect('/posts');
     }
 
 }
