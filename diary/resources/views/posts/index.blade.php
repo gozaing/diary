@@ -42,5 +42,45 @@
         </form>
     </div>
 
-    <!-- TODO: Current Posts -->
+    <!-- 現在のタスク -->
+    @if (count($posts) > 0)
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                現在のポスト
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-striped post-table">
+
+                    <!-- テーブルヘッダ -->
+                    <thead>
+                    <th>Title</th>
+                    <th>Body</th>
+                    <th>&nbsp;</th>
+                    </thead>
+
+                    <!-- テーブル本体 -->
+                    <tbody>
+                    @foreach ($posts as $post)
+                        <tr>
+                            <!-- Post Title -->
+                            <td class="table-text">
+                                <div>{{ $post->title }}</div>
+                            </td>
+                            <!-- Post Body -->
+                            <td class="table-text">
+                                <div>{{ $post->body }}</div>
+                            </td>
+
+                            <td>
+                                <!-- TODO: 削除ボタン -->
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
+
 @endsection
