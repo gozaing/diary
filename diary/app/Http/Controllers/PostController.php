@@ -65,4 +65,16 @@ class PostController extends Controller
         return redirect('/posts');
     }
 
+    /**
+     * 指定ポストの削除
+     *
+     * @param Request $request
+     * @param Post $post
+     * @return Response
+     */
+    public function destroy(Request $request, Post $post)
+    {
+        //
+    }
+
 }

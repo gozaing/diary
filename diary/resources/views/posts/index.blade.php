@@ -73,7 +73,17 @@
                             </td>
 
                             <td>
-                                <!-- TODO: 削除ボタン -->
+                                <!-- 削除ボタン -->
+                            <td>
+                                <form action="{{ url('post/'.$post->id) }}" method="POST">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+
+                                    <button type="submit" id="delete-post-{{ $post->id }}" class="btn btn-danger">
+                                        <i class="fa fa-btn fa-trash"></i>削除
+                                    </button>
+                                </form>
+                            </td>
                             </td>
                         </tr>
                     @endforeach
