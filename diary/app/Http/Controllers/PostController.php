@@ -24,9 +24,14 @@ class PostController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('posts.index');
+//        return view('posts.index');
+        $posts = $request->user()->posts()->get();
+
+        return view('posts.index', [
+            'posts' => $posts,
+        ]);
     }
 
     /**
