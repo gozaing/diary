@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\Repositories\PostRepository;
+use Session;
 
 class PostController extends Controller
 {
@@ -56,7 +57,32 @@ class PostController extends Controller
             'body' => 'required',
         ]);
 
-        // ポスト作成処理
+        Session::put('posts', $request->all());
+        return redirect('/confirm');
+    }
+
+    /**
+     * 確認画面表示
+     */
+    public function confirm()
+    {
+
+        $input = Session::get('posts');
+        return view('posts.confirm', [
+            'input' => $input,
+        ]);
+
+    }
+
+    /**
+     * ポスト登録処理
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function complete(Request $request)
+    {
+         // ポスト作成処理
         $request->user()->posts()->create([
             'title' => $request->title,
             'body' => $request->body,
