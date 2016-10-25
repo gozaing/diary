@@ -14,6 +14,12 @@
         {{ csrf_field() }}
 
         <!-- ポスト -->
+            @if (isset($input['id']))
+            <div class="form-group">
+                <input type="hidden" name="id" id="post-id" value='{{ $input['id'] }}'>
+            </div>
+            @endif
+
             <div class="form-group">
                 <label class="col-sm-3 control-label">{{ $input['title'] }}</label>
                 <input type="hidden" name="title" id="post-title" value='{{ $input['title'] }}'>

@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\Repositories\PostRepository;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
@@ -82,13 +82,65 @@ class PostController extends Controller
      */
     public function complete(Request $request)
     {
-         // ポスト作成処理
-        $request->user()->posts()->create([
-            'title' => $request->title,
-            'body' => $request->body,
-        ]);
+
+        // editの場合
+        if ($request->id) {
+            // edit
+
+            // ポスト情報を取得
+            $post = Post::find($request->id);
+
+            $post->title = $request->title;
+            $post->body = $request->body;
+
+            $post->save();
+
+        } else {
+            // ポスト作成処理
+            $request->user()->posts()->create([
+                'title' => $request->title,
+                'body' => $request->body,
+            ]);
+
+        }
 
         return redirect('/posts');
+    }
+
+    /**
+     * ポスト編集画面表示処理
+     *
+     * @param $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        // ポスト情報を取得
+        $post = Post::find($id);
+
+        return view('posts.edit', [
+            'post' => $post,
+        ]);
+
+    }
+
+    /**
+     * ポストを編集し更新する処理
+     *
+     * @param Request $request
+     * @param $id (post.id)
+     * @return Response
+     */
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'body' => 'required',
+        ]);
+
+        Session::put('posts', $request->all());
+        return redirect('/confirm');
+
     }
 
     /**

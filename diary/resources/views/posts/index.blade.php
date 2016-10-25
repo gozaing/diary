@@ -57,6 +57,7 @@
                     <th>Title</th>
                     <th>Body</th>
                     <th>&nbsp;</th>
+                    <th>&nbsp;</th>
                     </thead>
 
                     <!-- テーブル本体 -->
@@ -72,8 +73,12 @@
                                 <div>{{ $post->body }}</div>
                             </td>
 
+                            <!-- 編集ボタン -->>
                             <td>
-                                <!-- 削除ボタン -->
+                                <a href="{{ url('edit/'.$post->id) }}" class="btn btn-primary btn-sm">編集</a>
+                            </td>
+
+                            <!-- 削除ボタン -->
                             <td>
                                 <form action="{{ url('post/'.$post->id) }}" method="POST">
                                     {{ csrf_field() }}
@@ -83,7 +88,6 @@
                                         <i class="fa fa-btn fa-trash"></i>削除
                                     </button>
                                 </form>
-                            </td>
                             </td>
                         </tr>
                     @endforeach
